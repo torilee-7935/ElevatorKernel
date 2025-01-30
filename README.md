@@ -1,7 +1,3 @@
-Here’s a **cleaned-up and well-structured README** for your **Elevator Kernel Module** project:
-
----
-
 # **ElevatorKernelModule**
 
 ## **Project Objectives**

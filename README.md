@@ -1,75 +1,129 @@
-# ElevatorKernelModule
+Here’s a **cleaned-up and well-structured README** for your **Elevator Kernel Module** project:
 
-# Project Objectives
-Gain hands-on experience with system calls: Understand the fundamental concepts and implementation details of system calls by working on various aspects of kernel programming.
-Explore kernel programming: Develop a deeper understanding of kernel programming by delving into the intricacies of concurrency and synchronization mechanisms within the kernel.
-Enhance knowledge of concurrency and synchronization: Apply the acquired knowledge of concurrency and synchronization in the kernel environment to effectively manage and control concurrent access to shared resources.
-Explore different techniques and approaches to ensure thread safety and prevent race conditions.
+---
 
-# Project Description 
-This project aims to provide a comprehensive understanding of system calls, kernel programming, concurrency, synchronization, and elevator scheduling algorithms.
+# **ElevatorKernelModule**
 
-By completing this project, you acquire practical experience in system calls, kernel programming, concurrency, synchronization, and scheduling algorithms. These are essential skills for developing efficient and robust software systems, particularly in operating systems and low-level programming domains. Understanding system calls and kernel programming enables you to interact with and extend the functionality of the operating system, while concurrency, synchronization, and scheduling concepts are crucial for efficient resource management and multitasking in complex systems
+## **Project Objectives**
+This project provides hands-on experience with:
+- **System calls:** Understanding and implementing system calls to interact with the kernel.
+- **Kernel programming:** Exploring concurrency, synchronization, and resource management.
+- **Concurrency & synchronization:** Managing shared resources effectively to ensure thread safety and prevent race conditions.
+- **Elevator scheduling algorithms:** Implementing a custom scheduling algorithm for a dorm elevator system within the Linux kernel.
 
-# Part 1 - System-Call Tracing 
-In Part 1, you start by working with system calls. By adding system calls to a C program and verifying their correctness using the "strace" tool, you gain hands-on experience with system call integration and learn about the available system calls for your machine. This part lays the foundation for understanding how system calls interact with the kernel
+## **Project Description**
+This project is divided into three main parts:
+1. **System-Call Tracing** – Exploring system calls and their integration.
+2. **Timer Kernel Module** – Creating a kernel module that tracks time.
+3. **Elevator Module** – Implementing an elevator scheduling algorithm as a kernel module.
 
-# Part 2 - Timer Kernel Module
-Part 2 takes you further into kernel programming. You will develop a kernel module called "my_timer" that retrieves and stores the current time using the "ktime_get_real_ts64()" function. This module creates a proc entry and allows you to read the current time and elapsed time since the last call. This part helps you understand how kernel modules work, how to interact with kernel functions, and how to use proc interfaces for communication.
+By completing this project, you will gain experience in **system calls, kernel module development, concurrency control, and scheduling algorithms**—essential skills for **operating systems and low-level programming**.
 
-# Part 3 - Elevator Module
-Part 3 focuses on a more complex task: implementing a scheduling algorithm for a dorm elevator. You create a kernel module representing the elevator, supporting operations like starting, stopping, and issuing requests. The module also provides a "/proc/elevator" entry to display important elevator information. This part challenges you to manage concurrency, synchronization, and efficient scheduling within the kernel environment.
+---
 
+## **Part 1 - System-Call Tracing**
+- Learn about **system calls** by adding them to a C program.
+- Use the `strace` tool to trace and verify system calls.
+- Understand **how system calls interact with the Linux kernel**.
 
-# division of labor (after) 
-Project 2: Division of Labor
-Operating Systems
-Team Members:
-1. Gabriela Pedreros
-2. Tori Lee
-3. Jacob Sonn
-
-Part 1: System Call Tracing
-- Gabriela Pedreros
-Part 2: Timer Kernel Module
-- Jacob Sonn
-- Gabriela Pedreros
-Part 3a: Adding System Calls
-- Tori Lee
-Part 3b: Kernel Compilation
-- Tori Lee
-Part 3c: Threads
-- Gabriela Pedreros
-Part 3d: Linked List
-- Jacob Sonn
-Part 3e: Mutexes
-- Tori Lee
-- Gabriela Pedreros
-Part 3f: Scheduling Algorithm
-- Jacob Sonn
-
-
-# file listing
+### **Files:**
+```
 part 1/
- empty.c
- empty.trace
- part1.c
- part1.trace
- Makefile
+│── empty.c
+│── empty.trace
+│── part1.c
+│── part1.trace
+│── Makefile
+```
+
+---
+
+## **Part 2 - Timer Kernel Module**
+- Develop a **kernel module (`my_timer.ko`)** that retrieves and stores the current system time using `ktime_get_real_ts64()`.
+- Implement a **proc entry (`/proc/my_timer`)** to track elapsed time.
+- Gain experience in **kernel module development and interaction with kernel functions**.
+
+### **Files:**
+```
 part 2/
- src/
- Makefile
+│── src/
+│── Makefile
+```
+
+---
+
+## **Part 3 - Elevator Module**
+- Implement a **kernel module (`elevator.ko`)** that:
+  - Simulates a dorm elevator with **start, stop, and request operations**.
+  - Uses **synchronization mechanisms** such as **threads, linked lists, and mutexes**.
+  - Provides a **`/proc/elevator` entry** to display elevator status.
+- Learn about **concurrent scheduling and kernel module synchronization**.
+
+### **Files:**
+```
 part 3/
- src/
- Makefile
- syscalls.c
-Makefile
-README.md
+│── src/
+│── Makefile
+│── syscalls.c
+│── Makefile
+```
 
-*For this project, you only need to organize your source code and header files into the src/ folder.
+## **Compilation & Execution Instructions**
+### **1. Setting Up the Kernel Build Environment**
+Ensure that you have the necessary Linux kernel headers installed:
+```bash
+sudo apt-get install build-essential linux-headers-$(uname -r)
+```
 
-Do not include your final executable(s) in your repository, doing so will result in a deduction!
+### **2. Compiling the Kernel Modules**
+Navigate to the respective directory and run:
+```bash
+make
+```
+This will generate the following kernel modules:
+- **Part 2:** `my_timer.ko`
+- **Part 3:** `elevator.ko`
 
-For part 2 and part 3, your makefile should produce a kernel module, my_timer.ko and elevator.ko respectively.
+### **3. Loading and Running Kernel Modules**
+Load the module using:
+```bash
+sudo insmod my_timer.ko   # For Timer Kernel Module
+sudo insmod elevator.ko   # For Elevator Module
+```
 
-# description of how to compile and run program 
+### **4. Checking Module Output**
+Use the `dmesg` command to check the module logs:
+```bash
+dmesg | tail -n 20
+```
+
+### **5. Interacting with the Modules**
+To view the **Timer Module output**, read from the `/proc` entry:
+```bash
+cat /proc/my_timer
+```
+To check the **Elevator Module status**, read from:
+```bash
+cat /proc/elevator
+```
+
+### **6. Removing the Kernel Modules**
+To remove the modules safely:
+```bash
+sudo rmmod my_timer
+sudo rmmod elevator
+```
+
+---
+
+## **Repository Guidelines**
+- **Organize source code and header files** into the `/src/` folder.
+- **Do NOT include compiled executables** in the repository.
+- Ensure that each **Makefile** correctly compiles the respective kernel module.
+
+---
+
+## **Future Improvements**
+- Improve **elevator scheduling** with different algorithms (e.g., FCFS, SCAN).
+- Implement a **user-space interface** to interact with the modules.
+- Optimize synchronization mechanisms for better efficiency.
